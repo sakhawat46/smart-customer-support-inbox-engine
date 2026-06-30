@@ -24,7 +24,7 @@ class ConversationService:
 
         conversation.save()
 
-        analyze_sentiment.delay(conversation.id)
+        # analyze_sentiment.delay(conversation.id)
 
         channel_layer = get_channel_layer()
 
