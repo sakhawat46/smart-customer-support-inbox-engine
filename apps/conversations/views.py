@@ -7,6 +7,9 @@ from .models import Conversation, Message
 from .serializers import ConversationListSerializer, MessageSerializer, ReplySerializer
 from .pagination import CustomPagination
 from .services import ConversationService
+from rest_framework import status
+from .serializers import ConversationCreateSerializer
+
 
 
 
@@ -67,4 +70,35 @@ class ReplyAPIView(APIView):
 
         return Response(
             {"message":"Reply Sent"}
+        )
+    
+
+
+
+
+
+
+class ConversationCreateAPIView(APIView):
+
+    def post(self, request):
+
+        serializer = ConversationCreateSerializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+
+        conversation = Conversation.objects.create(
+            customer_name=serializer.validated_data["customer_name"]
+        )
+
+        Message.objects.create(
+            conversation=conversation,
+            sender=Message.Sender.CUSTOMER,
+            message=serializer.validated_data["message"]
+        )
+
+        return Response(
+            {
+                "id": conversation.id,
+                "message": "Conversation created successfully."
+            },
+            status=status.HTTP_201_CREATED
         )

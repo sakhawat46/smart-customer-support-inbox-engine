@@ -40,3 +40,13 @@ class MessageSerializer(serializers.ModelSerializer):
 class ReplySerializer(serializers.Serializer):
 
     message = serializers.CharField()
+
+
+
+
+
+
+
+class ConversationCreateSerializer(serializers.Serializer):
+    customer_name = serializers.CharField()
+    message = serializers.CharField()
