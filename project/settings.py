@@ -49,7 +49,8 @@ INSTALLED_APPS = [
     'rest_framework',
     'rest_framework_simplejwt',
     'rest_framework_simplejwt.token_blacklist',
-    
+    'corsheaders',
+
     # Custom apps
     'apps.users',
     'apps.conversations',
@@ -57,6 +58,8 @@ INSTALLED_APPS = [
     'apps.suggestions',
 
 ]
+
+
 
 
 

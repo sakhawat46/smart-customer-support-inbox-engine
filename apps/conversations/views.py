@@ -60,7 +60,18 @@ class MessageListAPIView(ListAPIView):
 
 class ReplyAPIView(APIView):
 
+    permission_classes = [IsAuthenticated]
+
     def post(self, request, pk):
+
+        lock_owner_id = ConversationLockService.get_lock_owner(pk)
+        if lock_owner_id and lock_owner_id != request.user.id:
+            owner = User.objects.filter(id=lock_owner_id).first()
+            owner_email = owner.email if owner else "another agent"
+            return Response(
+                {"error": f"Conversation is locked by {owner_email}. You cannot reply."},
+                status=status.HTTP_423_LOCKED
+            )
 
         serializer = ReplySerializer(data=request.data)
 
@@ -73,7 +84,7 @@ class ReplyAPIView(APIView):
         )
 
         return Response(
-            {"message":"Reply Sent"}
+            {"message": "Reply Sent"}
         )
     
 
