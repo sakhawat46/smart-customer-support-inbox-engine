@@ -35,10 +35,10 @@ class Message(models.Model):
     agent = models.ForeignKey(settings.AUTH_USER_MODEL, null=True, blank=True, on_delete=models.SET_NULL)
     message = models.TextField()
 
-    updated_at = models.DateTimeField(auto_now_add=True)
+    timestamp = models.DateTimeField(auto_now_add=True)
 
     class Meta:
-        ordering = ["updated_at"]
+        ordering = ["timestamp"]
 
     def __str__(self):
         return f"{self.sender} - {self.conversation.id}"

@@ -31,7 +31,7 @@ class MessageSerializer(serializers.ModelSerializer):
             "id",
             "sender",
             "message",
-            "created_at",
+            "timestamp",
         )
 
     
