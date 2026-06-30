@@ -21,8 +21,6 @@ class ConversationListSerializer(serializers.ModelSerializer):
         return message.message if message else None
     
 
-
-
 class MessageSerializer(serializers.ModelSerializer):
 
     class Meta:
@@ -35,15 +33,8 @@ class MessageSerializer(serializers.ModelSerializer):
         )
 
     
-
-
 class ReplySerializer(serializers.Serializer):
-
     message = serializers.CharField()
-
-
-
-
 
 
 
