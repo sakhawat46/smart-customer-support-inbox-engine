@@ -1,0 +1,427 @@
+{
+  "info": {
+    "_postman_id": "36ad7779-79e7-494a-a93b-efb44d1c3f8f",
+    "name": "api",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "49678181",
+    "_collection_link": "https://go.postman.co/collection/49678181-36ad7779-79e7-494a-a93b-efb44d1c3f8f?source=collection_link"
+  },
+  "item": [
+    {
+      "name": "user",
+      "item": [
+        {
+          "name": "login",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"email\": \"admin@test.com\",\r\n    \"password\": \"admin123\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://127.0.0.1:8000/api/token/",
+              "protocol": "http",
+              "host": [
+                "127",
+                "0",
+                "0",
+                "1"
+              ],
+              "port": "8000",
+              "path": [
+                "api",
+                "token",
+                ""
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "refresh",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"refresh\": \"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoicmVmcmVzaCIsImV4cCI6MTc4Nzk3NTE4MiwiaWF0IjoxNzgyNzkxMTgyLCJqdGkiOiJjZjIzNGYzMmIxOGU0Y2ZlYjJiZjE2NDIxOTIxOTdiOSIsInVzZXJfaWQiOjF9.U8eIhksBMmFq-rE5zQprNo5MYvGa3n_Q8Nzc3hEA5RQ\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://127.0.0.1:8000/api/token/refresh/",
+              "protocol": "http",
+              "host": [
+                "127",
+                "0",
+                "0",
+                "1"
+              ],
+              "port": "8000",
+              "path": [
+                "api",
+                "token",
+                "refresh",
+                ""
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "conversation",
+      "item": [
+        {
+          "name": "conversation create",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzg1Mzg4NDI4LCJpYXQiOjE3ODI3OTExODIsImp0aSI6ImM0Y2Q4MDhhZDRhOTQ3Y2U4NGRhNWVjOTU5YTc3OTZmIiwidXNlcl9pZCI6MX0.hVCyYPVGO3NLD7_w4kv8nxLfrksFEJTjqigPU-bFQk4",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"customer_name\": \"John Doe\",\r\n    \"message\": \"Need help with my order\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://127.0.0.1:8000/api/conversations/create/",
+              "protocol": "http",
+              "host": [
+                "127",
+                "0",
+                "0",
+                "1"
+              ],
+              "port": "8000",
+              "path": [
+                "api",
+                "conversations",
+                "create",
+                ""
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "conversation list",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzg1Mzg4NDI4LCJpYXQiOjE3ODI3OTExODIsImp0aSI6ImM0Y2Q4MDhhZDRhOTQ3Y2U4NGRhNWVjOTU5YTc3OTZmIiwidXNlcl9pZCI6MX0.hVCyYPVGO3NLD7_w4kv8nxLfrksFEJTjqigPU-bFQk4",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://127.0.0.1:8000/api/conversations/",
+              "protocol": "http",
+              "host": [
+                "127",
+                "0",
+                "0",
+                "1"
+              ],
+              "port": "8000",
+              "path": [
+                "api",
+                "conversations",
+                ""
+              ],
+              "query": [
+                {
+                  "key": "page",
+                  "value": "1",
+                  "disabled": true
+                },
+                {
+                  "key": "search",
+                  "value": "John",
+                  "disabled": true
+                },
+                {
+                  "key": "status",
+                  "value": "open",
+                  "disabled": true
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "conversation history",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzg1Mzg4NDI4LCJpYXQiOjE3ODI3OTExODIsImp0aSI6ImM0Y2Q4MDhhZDRhOTQ3Y2U4NGRhNWVjOTU5YTc3OTZmIiwidXNlcl9pZCI6MX0.hVCyYPVGO3NLD7_w4kv8nxLfrksFEJTjqigPU-bFQk4",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://127.0.0.1:8000/api/conversations/1/messages/",
+              "protocol": "http",
+              "host": [
+                "127",
+                "0",
+                "0",
+                "1"
+              ],
+              "port": "8000",
+              "path": [
+                "api",
+                "conversations",
+                "1",
+                "messages",
+                ""
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "send reply",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzg1Mzg4NDI4LCJpYXQiOjE3ODI3OTExODIsImp0aSI6ImM0Y2Q4MDhhZDRhOTQ3Y2U4NGRhNWVjOTU5YTc3OTZmIiwidXNlcl9pZCI6MX0.hVCyYPVGO3NLD7_w4kv8nxLfrksFEJTjqigPU-bFQk4",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"message\": \"Hello, we are checking your issue.\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://127.0.0.1:8000/api/conversations/1/reply/",
+              "protocol": "http",
+              "host": [
+                "127",
+                "0",
+                "0",
+                "1"
+              ],
+              "port": "8000",
+              "path": [
+                "api",
+                "conversations",
+                "1",
+                "reply",
+                ""
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "suggestion",
+      "item": [
+        {
+          "name": "suggest reply",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzg1Mzg4NDI4LCJpYXQiOjE3ODI3OTExODIsImp0aSI6ImM0Y2Q4MDhhZDRhOTQ3Y2U4NGRhNWVjOTU5YTc3OTZmIiwidXNlcl9pZCI6MX0.hVCyYPVGO3NLD7_w4kv8nxLfrksFEJTjqigPU-bFQk4",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"message\": \"Customer wants refund\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://127.0.0.1:8000/api/conversations/1/suggest-reply/",
+              "protocol": "http",
+              "host": [
+                "127",
+                "0",
+                "0",
+                "1"
+              ],
+              "port": "8000",
+              "path": [
+                "api",
+                "conversations",
+                "1",
+                "suggest-reply",
+                ""
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "lock",
+      "item": [
+        {
+          "name": "locked",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzg1Mzg4NDI4LCJpYXQiOjE3ODI3OTExODIsImp0aSI6ImM0Y2Q4MDhhZDRhOTQ3Y2U4NGRhNWVjOTU5YTc3OTZmIiwidXNlcl9pZCI6MX0.hVCyYPVGO3NLD7_w4kv8nxLfrksFEJTjqigPU-bFQk4",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "POST",
+            "header": [],
+            "url": {
+              "raw": "http://127.0.0.1:8000/api/conversations/1/lock/",
+              "protocol": "http",
+              "host": [
+                "127",
+                "0",
+                "0",
+                "1"
+              ],
+              "port": "8000",
+              "path": [
+                "api",
+                "conversations",
+                "1",
+                "lock",
+                ""
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "unlocked",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzg1Mzg4NDI4LCJpYXQiOjE3ODI3OTExODIsImp0aSI6ImM0Y2Q4MDhhZDRhOTQ3Y2U4NGRhNWVjOTU5YTc3OTZmIiwidXNlcl9pZCI6MX0.hVCyYPVGO3NLD7_w4kv8nxLfrksFEJTjqigPU-bFQk4",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "POST",
+            "header": [],
+            "url": {
+              "raw": "http://127.0.0.1:8000/api/conversations/1/unlock/",
+              "protocol": "http",
+              "host": [
+                "127",
+                "0",
+                "0",
+                "1"
+              ],
+              "port": "8000",
+              "path": [
+                "api",
+                "conversations",
+                "1",
+                "unlock",
+                ""
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "lock status",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzg1Mzg4NDI4LCJpYXQiOjE3ODI3OTExODIsImp0aSI6ImM0Y2Q4MDhhZDRhOTQ3Y2U4NGRhNWVjOTU5YTc3OTZmIiwidXNlcl9pZCI6MX0.hVCyYPVGO3NLD7_w4kv8nxLfrksFEJTjqigPU-bFQk4",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://127.0.0.1:8000/api/conversations/1/lock-status/",
+              "protocol": "http",
+              "host": [
+                "127",
+                "0",
+                "0",
+                "1"
+              ],
+              "port": "8000",
+              "path": [
+                "api",
+                "conversations",
+                "1",
+                "lock-status",
+                ""
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    }
+  ]
+}

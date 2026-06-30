@@ -6,14 +6,31 @@ x-django-common: &django-common
     dockerfile: Dockerfile
   volumes:
     - .:/app
-    - sqlite_data:/app/db
     - static_volume:/app/staticfiles
     - media_volume:/app/media
   depends_on:
     redis:
       condition: service_healthy
+    db:
+      condition: service_healthy
 
 services:
+
+  db:
+    image: postgres:15-alpine
+    container_name: support_db
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: support_db
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgrespassword
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres -d support_db"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
 
   redis:
     image: redis:7-alpine
@@ -56,6 +73,6 @@ services:
 
 volumes:
   redis_data:
-  sqlite_data:
+  postgres_data:
   static_volume:
   media_volume:
