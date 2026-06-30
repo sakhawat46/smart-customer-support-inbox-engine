@@ -1,0 +1,61 @@
+version: "3.9"
+
+x-django-common: &django-common
+  build:
+    context: .
+    dockerfile: Dockerfile
+  volumes:
+    - .:/app
+    - sqlite_data:/app/db
+    - static_volume:/app/staticfiles
+    - media_volume:/app/media
+  depends_on:
+    redis:
+      condition: service_healthy
+
+services:
+
+  redis:
+    image: redis:7-alpine
+    container_name: support_redis
+    restart: unless-stopped
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_data:/data
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 5s
+      timeout: 3s
+      retries: 5
+
+  web:
+    <<: *django-common
+    container_name: support_web
+    restart: unless-stopped
+    command: >
+      sh -c "python manage.py migrate --noinput &&
+             python manage.py seed_admin &&
+             daphne -b 0.0.0.0 -p 8000 project.asgi:application"
+    ports:
+      - "8000:8000"
+
+  celery:
+    <<: *django-common
+    container_name: support_celery
+    restart: unless-stopped
+    command: celery -A project worker --loglevel=info --concurrency=2
+
+  celery-beat:
+    <<: *django-common
+    container_name: support_celery_beat
+    restart: unless-stopped
+    command: celery -A project beat --loglevel=info --scheduler django_celery_beat.schedulers:DatabaseScheduler
+    profiles:
+      - beat
+
+volumes:
+  redis_data:
+  sqlite_data:
+  static_volume:
+  media_volume:
