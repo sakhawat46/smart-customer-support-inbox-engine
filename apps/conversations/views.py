@@ -11,15 +11,10 @@ from rest_framework import status
 from .serializers import ConversationCreateSerializer
 from .locking import ConversationLockService
 from django.contrib.auth import get_user_model
-
 User = get_user_model()
 
 
-
-
-
 class ConversationListAPIView(ListAPIView):
-
     serializer_class = ConversationListSerializer
     pagination_class = CustomPagination
     permission_classes = [IsAuthenticated]
@@ -44,7 +39,6 @@ class ConversationListAPIView(ListAPIView):
     
 
 class MessageListAPIView(ListAPIView):
-
     serializer_class = MessageSerializer
     permission_classes = [IsAuthenticated]
 
@@ -89,10 +83,6 @@ class ReplyAPIView(APIView):
     
 
 
-
-
-
-
 class ConversationCreateAPIView(APIView):
 
     def post(self, request):
@@ -118,8 +108,6 @@ class ConversationCreateAPIView(APIView):
             status=status.HTTP_201_CREATED
         )
     
-
-
 
 class AcquireLockAPIView(APIView):
 
@@ -155,9 +143,6 @@ class AcquireLockAPIView(APIView):
     
 
 
-
-
-
 class ReleaseLockAPIView(APIView):
 
     permission_classes = [IsAuthenticated]
@@ -184,8 +169,6 @@ class ReleaseLockAPIView(APIView):
             }
         )
     
-
-
 
 
 class LockStatusAPIView(APIView):
