@@ -6,7 +6,7 @@ from rest_framework.permissions import IsAuthenticated
 from .models import Conversation, Message
 from .serializers import ConversationListSerializer, MessageSerializer, ReplySerializer
 from .pagination import CustomPagination
-
+from .services import ConversationService
 
 
 
