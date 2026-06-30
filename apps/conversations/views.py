@@ -9,6 +9,10 @@ from .pagination import CustomPagination
 from .services import ConversationService
 from rest_framework import status
 from .serializers import ConversationCreateSerializer
+from .locking import ConversationLockService
+from django.contrib.auth import get_user_model
+
+User = get_user_model()
 
 
 
@@ -101,4 +105,99 @@ class ConversationCreateAPIView(APIView):
                 "message": "Conversation created successfully."
             },
             status=status.HTTP_201_CREATED
+        )
+    
+
+
+
+class AcquireLockAPIView(APIView):
+
+    permission_classes = [IsAuthenticated]
+
+    def post(self, request, pk):
+
+        success = ConversationLockService.acquire_lock(
+            conversation_id=pk,
+            user=request.user
+        )
+
+        if not success:
+
+            owner_id = ConversationLockService.get_lock_owner(pk)
+
+            owner = User.objects.get(id=owner_id)
+
+            return Response(
+                {
+                    "error": f"Conversation is locked by {owner.email}"
+                },
+                status=status.HTTP_423_LOCKED
+            )
+
+        return Response(
+            {
+                "message": "Conversation locked successfully.",
+                "locked_by": request.user.email,
+                "expires_in": 300
+            }
+        )
+    
+
+
+
+
+
+class ReleaseLockAPIView(APIView):
+
+    permission_classes = [IsAuthenticated]
+
+    def post(self, request, pk):
+
+        success = ConversationLockService.release_lock(
+            conversation_id=pk,
+            user=request.user
+        )
+
+        if not success:
+
+            return Response(
+                {
+                    "error": "You do not own this lock."
+                },
+                status=status.HTTP_403_FORBIDDEN
+            )
+
+        return Response(
+            {
+                "message": "Conversation unlocked successfully."
+            }
+        )
+    
+
+
+
+
+class LockStatusAPIView(APIView):
+
+    permission_classes = [IsAuthenticated]
+
+    def get(self, request, pk):
+
+        owner_id = ConversationLockService.get_lock_owner(pk)
+
+        if not owner_id:
+
+            return Response(
+                {
+                    "locked": False
+                }
+            )
+
+        owner = User.objects.get(id=owner_id)
+
+        return Response(
+            {
+                "locked": True,
+                "locked_by": owner.email
+            }
         )
